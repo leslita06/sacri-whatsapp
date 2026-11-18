@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#E95B0F">
+<title>SACRI · Le service client sur WhatsApp</title>
+<link rel="icon" href="data:,">
+<link rel="preload" href="assets/Inter.ttf" as="font" type="font/ttf" crossorigin>
+<link rel="stylesheet" href="assets/style.css?v=20261118a">
+</head>
+<body>
+<div class="demo"><div class="wrap"><b>Démonstration, conversation simulée</b> · clients, numéros et documents fictifs</div></div>
+
+<header class="masthead">
+  <div class="wrap mh">
+    <img src="assets/logo-sacri.png" alt="SACRI" class="logo" width="229" height="114">
+    <p class="eyebrow">Le service client sur WhatsApp</p>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="intro">
+    <h1>Une réponse en moins d'une minute, à toute heure</h1>
+    <p class="lede">L'assistant SACRI répond tout de suite sur WhatsApp, reconnaît la pièce sur photo, prépare la demande de devis et tient le client informé de sa machine. Un conseiller reprend la main dès qu'il faut un prix ou un engagement.</p>
+    <p class="valide"><span class="ic" aria-hidden="true">✓</span>Un conseiller SACRI valide chaque devis et chaque prix avant l'envoi.</p>
+  </section>
+
+  <nav class="scen" id="scen" aria-label="Choisir une conversation"></nav>
+
+  <section class="stage">
+    <div class="phone" id="phone">
+      <div class="notch" aria-hidden="true"></div>
+      <div class="screen">
+        <div class="sbar" aria-hidden="true"><span id="clock">08:14</span><span class="sig">▂▄▆ 4G ▮</span></div>
+        <div class="wa-head">
+          <span class="back" aria-hidden="true">‹</span>
+          <span class="av"><img src="assets/logo-sacri.png" alt=""></span>
+          <div class="who">
+            <p class="nm">SACRI Service client <span class="tick" title="Compte professionnel">✔</span></p>
+            <p class="st" id="status">compte professionnel</p>
+          </div>
+          <span class="ico" aria-hidden="true">⋮</span>
+        </div>
+        <div class="chat" id="chat" aria-live="polite"></div>
+        <div class="wa-foot" aria-hidden="true">
+          <div class="inp"><span>☺</span><em>Message</em><span>📎</span></div>
+          <div class="mic">🎤</div>
+        </div>
+      </div>
+    </div>
+
+    <aside class="side">
+      <p class="sn" id="s-num">Conversation 1 sur 4</p>
+      <h2 id="s-title"></h2>
+      <p class="sp" id="s-pitch"></p>
+      <ol class="steps" id="s-steps"></ol>
+      <div class="kpi">
+        <div><p class="k" id="s-delai"></p><p class="kl">première réponse de l'assistant</p></div>
+        <div><p class="k" id="s-humain"></p><p class="kl" id="s-humain-l"></p></div>
+      </div>
+      <div class="ctrl">
+        <button type="button" id="replay" class="btn">↻ Rejouer</button>
+        <button type="button" id="skip" class="btn ghost">Tout afficher</button>
+      </div>
+    </aside>
+  </section>
+</main>
+
+<footer class="foot"><div class="wrap">SACRI · Service client et après-vente · Démonstration : les clients, numéros, références de bons et documents affichés sont fictifs.</div></footer>
+<script src="assets/app.js?v=20261118a"></script>
+</body>
+</html>
