@@ -1,23 +1,23 @@
 (function(){
 "use strict";
 var BOT='<span class="who-l bot">Assistant SACRI</span>';
-var HUM=function(n){return '<span class="who-l hum">'+n+' · conseiller SACRI</span>';};
+var HUM=function(n){return '<span class="who-l hum">'+n+', conseiller SACRI</span>';};
 var S=[
 { k:"piece", t:"Pièce par photo", d:"La photo suffit pour trouver la pièce",
   title:"Le client envoie une photo, la pièce est trouvée",
-  pitch:"Un exploitant forestier photographie le pignon usé de sa tronçonneuse. L'assistant reconnaît la pièce, demande la plaque, prépare la demande ; le conseiller confirme la référence et envoie le devis.",
+  pitch:"Un exploitant forestier photographie la chaîne usée de sa tronçonneuse. L'assistant reconnaît la pièce, demande la plaque, prépare la demande ; le conseiller confirme la référence et envoie le devis.",
   steps:[["Photo de la pièce usée","c","Client"],["Pièce reconnue, plaque demandée","a","Assistant"],["Référence et stock confirmés","h","Conseiller"],["Devis envoyé, commande lancée","h","Conseiller"]],
   k1:"35 s", k2:"14 min", k2l:"pour le devis validé par le conseiller",
   m:[
    {d:"Aujourd'hui"},
-   {o:1,tm:"08:12",h:'<img class="photo" src="assets/photo-piece.svg" alt="Photo d\'un pignon de chaîne usé">Bonjour SACRI 🙏🏾 C\'est cette pièce là sur ma tronçonneuse. Vous avez ?',s:0},
-   {o:0,tm:"08:12",h:BOT+'Bonjour Monsieur, bienvenue chez SACRI 👋🏾<br>Sur la photo, c\'est un <strong>pignon de chaîne</strong> (couronne), bien usé.<br>Pour la bonne référence, envoyez-moi la photo de la <strong>plaque de la machine</strong> (modèle et numéro de série).',s:1,badge:"Réponse en 35 s"},
+   {o:1,tm:"08:12",h:'<img class="photo" src="assets/img/chaine.jpg?v=20261119b" alt="Photo de chaînes de tronçonneuse">Bonjour SACRI 🙏🏾 C\'est cette chaîne là sur ma tronçonneuse. Vous avez ?',s:0},
+   {o:0,tm:"08:12",h:BOT+'Bonjour Monsieur, bienvenue chez SACRI 👋🏾<br>Sur la photo, c\'est une <strong>chaîne de tronçonneuse</strong>, les dents sont usées.<br>Pour la bonne référence, envoyez-moi la photo de la <strong>plaque de la machine</strong> (modèle et numéro de série).',s:1,badge:"Réponse en 35 s"},
    {o:1,tm:"08:15",h:'C\'est une MS 381. Le numéro est effacé un peu, mais on voit 1 7 4 8…',s:1},
    {o:0,tm:"08:15",h:BOT+'Merci Monsieur. STIHL MS 381 noté ✅<br>Je transmets à un conseiller pour vérifier la référence et le stock. Il vous répond ici même.',s:1},
-   {sys:"Conversation transmise au magasin pièces · un conseiller prend la suite"},
-   {o:0,tm:"08:26",h:HUM("Didier")+'Bonjour Monsieur, Didier du magasin pièces.<br>Référence vérifiée au catalogue STIHL pour la MS 381, la pièce est <strong>disponible</strong> à Abidjan.<br>Je vous conseille aussi de changer la chaîne : elle s\'use avec le pignon.',s:2},
+   {sys:"Conversation transmise au magasin pièces : un conseiller prend la suite"},
+   {o:0,tm:"08:26",h:HUM("Didier")+'Bonjour Monsieur, Didier du magasin pièces.<br>Référence vérifiée au catalogue STIHL pour la MS 381, la pièce est <strong>disponible</strong> à Abidjan.<br>Je vous conseille aussi de changer le pignon : il s\'use avec la chaîne.',s:2},
    {o:1,tm:"08:28",h:'D\'accord, mettez les deux dedans.',s:2},
-   {o:0,tm:"08:29",h:HUM("Didier")+'<span class="doc"><span class="pdf">PDF</span><span><span class="dn">Devis DV-2611-0217.pdf</span><span class="ds">1 page · pignon + chaîne MS 381</span></span></span>Voici votre devis, prix vérifiés par mes soins. Répondez <strong>OUI</strong> pour lancer la commande.',s:3},
+   {o:0,tm:"08:29",h:HUM("Didier")+'<span class="doc"><span class="pdf">PDF</span><span><span class="dn">Devis DV-2611-0217.pdf</span><span class="ds">1 page, chaîne et pignon MS 381</span></span></span>Voici votre devis, prix vérifiés par mes soins. Répondez <strong>OUI</strong> pour lancer la commande.',s:3},
    {o:1,tm:"08:31",h:'OUI. Je passe prendre ça demain matin.',s:3},
    {o:0,tm:"08:31",h:BOT+'C\'est noté ✅ Commande lancée. Votre pièce sera prête au <strong>comptoir demain matin</strong>, au nom indiqué sur le devis. Bonne journée Monsieur !',s:3,badge:"Réponse en 20 s"}
   ]},
@@ -32,9 +32,9 @@ var S=[
    {o:0,tm:"10:04",h:BOT+'Bonjour Madame, merci de nous écrire 🙏🏾<br>Pour bien vous conseiller : c\'est pour <strong>herbe haute et broussaille</strong>, ou pour l\'entretien léger autour des parcelles ?',s:1,badge:"Réponse en 40 s",btn:["Broussaille épaisse","Entretien léger"]},
    {o:1,tm:"10:05",h:'Broussaille épaisse. Les gars travaillent toute la journée.',s:1,pick:0},
    {o:0,tm:"10:05",h:BOT+'Pour un travail de toute la journée en broussaille, le modèle conseillé est la <strong>STIHL FS 450</strong>, avec harnais et lame.<br>• 3 × FS 450<br>• 3 × kits harnais + lame<br>Prix : <strong>à confirmer par le conseiller</strong>, selon la quantité et les accessoires.',s:2},
-   {o:0,tm:"10:05",h:BOT+'<span class="lnk"><b>SACRI · Entretien espaces verts</b><span>Débroussailleuses, élagueuses, souffleurs STIHL</span><br><u>sacri-ci.com</u></span>Le catalogue en attendant. Le devis chiffré arrive ici dans la matinée.',s:2},
-   {sys:"Demande transmise au service commercial · le conseiller valide les prix"},
-   {o:0,tm:"10:30",h:HUM("Mariam")+'<span class="doc"><span class="pdf">PDF</span><span><span class="dn">Devis DV-2611-0223.pdf</span><span class="ds">1 page · 3 × STIHL FS 450 + kits</span></span></span>Bonjour Madame, Mariam du service commercial. Voici le devis, prix vérifiés. Pour la livraison à Divo, je vous confirme les conditions dès votre accord.',s:3},
+   {o:0,tm:"10:05",h:BOT+'<span class="lnk"><b>SACRI, entretien des espaces verts</b><span>Débroussailleuses, élagueuses, souffleurs STIHL</span><br><u>sacri-ci.com</u></span>Le catalogue en attendant. Le devis chiffré arrive ici dans la matinée.',s:2},
+   {sys:"Demande transmise au service commercial : le conseiller valide les prix"},
+   {o:0,tm:"10:30",h:HUM("Mariam")+'<span class="doc"><span class="pdf">PDF</span><span><span class="dn">Devis DV-2611-0223.pdf</span><span class="ds">1 page, 3 × STIHL FS 450 et kits</span></span></span>Bonjour Madame, Mariam du service commercial. Voici le devis, prix vérifiés. Pour la livraison à Divo, je vous confirme les conditions dès votre accord.',s:3},
    {o:1,tm:"10:41",h:'Merci, je regarde ça avec mon associé et je reviens vers vous.',s:3},
    {o:0,tm:"10:41",h:BOT+'Avec plaisir Madame. Mariam reste votre contact, on est là pour toute question 🙏🏾',s:3,badge:"Réponse en 15 s"}
   ]},
@@ -48,7 +48,7 @@ var S=[
    {o:0,tm:"09:20",h:BOT+'Bonjour Monsieur Bamba, votre machine est bien <strong>reçue à l\'atelier</strong> ✅<br>• Tronçonneuse STIHL MS 250<br>• Bon de réception <strong>BR-2026-0431</strong><br>• Panne déclarée : démarre puis cale<br>Je vous écris à chaque étape.',s:0,badge:"Bon BR-2026-0431"},
    {d:"Mardi 17 novembre"},
    {o:0,tm:"11:05",h:HUM("Koné")+'Bonjour Monsieur. Diagnostic fait : <strong>carburateur encrassé</strong> et filtre à air à changer. Le moteur est bon.',s:1},
-   {o:0,tm:"11:06",h:BOT+'<span class="doc"><span class="pdf">PDF</span><span><span class="dn">Devis réparation BR-2026-0431.pdf</span><span class="ds">1 page · validé par l\'atelier</span></span></span>Voici le devis de réparation. On commence dès votre accord.',s:1,btn:["J'accepte le devis","Appeler un conseiller"]},
+   {o:0,tm:"11:06",h:BOT+'<span class="doc"><span class="pdf">PDF</span><span><span class="dn">Devis réparation BR-2026-0431.pdf</span><span class="ds">1 page, validé par l\'atelier</span></span></span>Voici le devis de réparation. On commence dès votre accord.',s:1,btn:["J'accepte le devis","Appeler un conseiller"]},
    {o:1,tm:"11:20",h:'J\'accepte le devis',s:2,pick:0},
    {o:0,tm:"11:20",h:BOT+'Merci Monsieur, accord enregistré ✅ La réparation démarre aujourd\'hui. Machine prête prévue <strong>jeudi 19</strong>.',s:2,badge:"Réponse en 30 s"},
    {d:"Jeudi 19 novembre"},
@@ -66,8 +66,8 @@ var S=[
    {d:"Lundi 15 mars"},
    {o:0,tm:"09:00",h:BOT+'Bonjour Madame Koffi 👋🏾<br>La <strong>saison des pluies</strong> arrive, et la broussaille avec. Votre débroussailleuse <strong>STIHL FS 400</strong> n\'a pas été révisée depuis 7 mois.<br>Une révision avant la saison : bougie, filtre, lame, réglage.',s:0,btn:["Prendre rendez-vous","Me le rappeler plus tard"]},
    {o:1,tm:"09:34",h:'Prendre rendez-vous',s:1,pick:0},
-   {o:0,tm:"09:34",h:BOT+'Très bien Madame. Voici les créneaux libres à l\'atelier :',s:1,badge:"Réponse en 20 s",btn:["Mercredi 17 mars · 9 h","Jeudi 18 mars · 9 h","Jeudi 18 mars · 14 h"]},
-   {o:1,tm:"09:35",h:'Jeudi 18 mars · 9 h',s:1,pick:1},
+   {o:0,tm:"09:34",h:BOT+'Très bien Madame. Voici les créneaux libres à l\'atelier :',s:1,badge:"Réponse en 20 s",btn:["Mercredi 17 mars, 9 h","Jeudi 18 mars, 9 h","Jeudi 18 mars, 14 h"]},
+   {o:1,tm:"09:35",h:'Jeudi 18 mars, 9 h',s:1,pick:1},
    {o:0,tm:"09:35",h:BOT+'C\'est réservé ✅<br>• <strong>Jeudi 18 mars à 9 h</strong>, atelier SACRI, boulevard de Marseille<br>• Révision STIHL FS 400<br>• Prix de la révision confirmé par le conseiller à l\'arrivée<br>Je vous rappelle la veille.',s:2},
    {o:1,tm:"09:36",h:'Merci, c\'est bien organisé comme ça 👍🏾',s:2},
    {d:"Mercredi 17 mars"},
@@ -143,6 +143,9 @@ function play(i,all){
 nav();
 $("replay").addEventListener("click",function(){play(cur,false);});
 $("skip").addEventListener("click",function(){play(cur,true);});
-var start=Math.max(0,Math.min(S.length-1,(parseInt(q.get("c"),10)||1)-1));
-play(start,q.get("tout")==="1");
+var start=Math.max(0,Math.min(S.length-1,(parseInt(q.get("c"),10)||1)-1)),started=false;
+window.SacriConv={
+  start:function(){if(started)return;started=true;play(start,q.get("tout")==="1");},
+  stop:function(){clear();run++;started=false;}
+};
 })();
