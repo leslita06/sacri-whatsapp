@@ -75,7 +75,7 @@
           '<ul class="rg">' + REGLES.map(function (r) { return '<li id="rg-' + r.k + '"><span class="ri">' + svg(r.ic) + '</span><span class="rt"><b>' + r.t + '</b><span>' + r.q + ', ' + r.w + '</span></span><button type="button" class="btn sm ghost" data-r="' + r.k + '">' + svg('play') + 'Déclencher</button></li>'; }).join('') + '</ul>' +
           '<p class="garde">' + svg('shield') + 'Jamais de prix, de délai ni de geste commercial dans un message automatique : un conseiller les donne.</p></div>' +
           '<div class="card live"><div class="lh"><p class="cap"><span class="dot"></span>Messages partis seuls, ce matin</p><button type="button" class="btn sm" id="au-go">' + svg('reset') + 'Rejouer la matinée</button></div>' +
-          '<div class="cpt"><div><b id="au-n">0</b><span>partis seuls</span></div><div><b id="au-l">0</b><span>lus</span></div><div><b id="au-r">0</b><span>réponses</span></div><div><b>0</b><span>clic d\'un agent</span></div></div>' +
+          '<div class="cpt"><div><b id="au-n">–</b><span>partis seuls</span></div><div><b id="au-l">–</b><span>lus</span></div><div><b id="au-r">–</b><span>réponses</span></div><div><b>Aucun</b><span>clic d\'un agent</span></div></div>' +
           '<ol class="feed" id="feed"></ol></div>' +
         '</div>' +
         '<div class="au-r"><div class="wa" id="au-phone"><div class="wa-h"><span class="pa">' + svg('users') + '</span><span><b id="ph-cl">Le client</b><i id="ph-tel">ce qu\'il voit sur WhatsApp</i></span></div><div class="wa-c" id="ph-c"><p class="wait">En attente du prochain message…</p></div></div><p class="cap-ph">Écran du client (fictif)</p></div>' +
@@ -89,7 +89,7 @@
       });
     });
   }
-  function maj() { $('au-n').textContent = A.n; $('au-l').textContent = A.l; $('au-r').textContent = A.r; }
+  function maj() { $('au-n').textContent = A.n || '–'; $('au-l').textContent = A.l || '–'; $('au-r').textContent = A.r || '–'; }
   var seq = 0;
   function fire(e, h) {
     var id = 'fs' + (seq++);

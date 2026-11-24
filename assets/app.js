@@ -1,8 +1,49 @@
 (function(){
 "use strict";
 var BOT='<span class="who-l bot">Assistant SACRI</span>';
+var CATALOGUE="https://leslita06.github.io/sacri-catalogue/";
+function safeMsg(html){return html.replace(/(https?:\/\/[^ <\\"']+|sacri-catalogue)/g,function(u){var h=u==="sacri-catalogue"?CATALOGUE:u;return '<a href="'+h+'" target="_blank" rel="noopener">'+(u==="sacri-catalogue"?'ouvrir le catalogue SACRI':u)+'</a>';});}
 var HUM=function(n){return '<span class="who-l hum">'+n+', conseiller SACRI</span>';};
 var S=[
+{ k:"panne", t:"Panne en note vocale", d:"Diagnostic dès le premier message",
+  title:"Le client parle, l'assistant diagnostique tout de suite",
+  pitch:"Un exploitant envoie une note vocale : sa tronçonneuse ne démarre plus. L'assistant transcrit la note, répond sans menu, s'appuie sur la notice STIHL, donne les vérifications sans promettre de prix, puis propose trois suites. Le rendez-vous reste une demande jusqu'à confirmation de l'atelier.",
+  steps:[["Note vocale du client","c","Client"],["Transcrite et comprise","a","Assistant"],["Diagnostic issu de la notice","a","Assistant"],["Demande d'atelier à confirmer","c","Client"]],
+  k1:"25 s", k2:"0", k2l:"question posée avant le diagnostic",
+  m:[
+   {d:"Aujourd'hui"},
+   {o:1,tm:"07:42",h:'<span class="voice"><span class="vp">▶</span><span class="vw"></span><span class="vd">0:06</span></span><span class="vt">« Ma tronçonneuse-là ne démarre plus, qu\'est-ce que je fais ? »</span>',s:0},
+   {o:0,tm:"07:42",h:BOT+'Une tronçonneuse qui ne démarre plus, c\'est souvent simple 🔧 À vérifier dans l\'ordre, moteur arrêté, frein de chaîne serré :<br>1. <strong>Carburant</strong> frais, mélange 1:50 (20 ml d\'huile 2 temps pour 1 litre).<br>2. <strong>Moteur noyé</strong> : bougie mouillée ? Séchez-la, tirez le lanceur 5 ou 6 fois et redémarrez sans starter.<br>3. <strong>Bougie</strong> noire ou usée : nettoyer ou remplacer.<br>4. <strong>Filtre à air</strong> : nettoyer, remplacer s\'il reste encrassé.<br>5. <strong>Démarrage</strong> : starter selon la notice du modèle.<br>🔩 La bougie est à vérifier, mais la panne et la pièce sont à confirmer à l\'inspection. Aucun prix SACRI n\'est affiché sans tarif vérifié.<br>Catalogue : <a href="https://leslita06.github.io/sacri-catalogue/" target="_blank" rel="noopener">ouvrir le catalogue SACRI</a>',s:2,badge:"Réponse simulée — environ 25 s",btn:["Ça repart 👍","Toujours en panne : demander l'atelier","Être rappelé par un technicien"]},
+   {o:1,tm:"07:51",h:'Demander un créneau atelier',s:2,pick:1},
+   {o:0,tm:"07:51",h:BOT+'D\'accord, voici les prochains créneaux proposés. La date doit être confirmée par l\'atelier :',s:3,btn:["Mercredi 25 novembre — jour proposé","Mercredi 25 novembre — autre jour proposé","Jeudi 26 novembre — jour proposé","Autre date"]},
+   {o:1,tm:"07:52",h:'Jeudi 26 novembre — jour proposé',s:3,pick:2},
+   {o:0,tm:"07:52",h:BOT+'Votre demande de démonstration est transmise à l\'atelier SACRI ✅<br>🛠️ Réparation, tronçonneuse<br>📅 <strong>Jeudi 26 novembre — jour proposé — demandé, pas encore réservé</strong><br>📍 Atelier SACRI, boulevard de Marseille<br>Le scénario s\'arrête ici ; aucun planning d\'atelier réel n\'est consulté.',s:3}
+  ]},
+{ k:"revision", t:"Révision en une réponse", d:"Modèles et créneaux proposés",
+  title:"Une demande d'entretien en une seule réponse",
+  pitch:"Une gérante de plantation veut faire réviser sa débroussailleuse. L'assistant ne demande ni le modèle ni le jour : il propose les modèles STIHL courants et les créneaux du calendrier. Elle répond « B2 » ; une demande est transmise, l'atelier doit confirmer.",
+  steps:[["Demande de révision","c","Client"],["Modèles et créneaux proposés","a","Assistant"],["Une réponse : B2","c","Client"],["Demande transmise pour confirmation","a","Assistant"]],
+  k1:"15 s", k2:"1", k2l:"seule réponse avant la demande d'atelier",
+  m:[
+   {d:"Aujourd'hui"},
+   {o:1,tm:"10:12",h:'Je veux réviser ma débroussailleuse',s:0},
+   {o:0,tm:"10:12",h:BOT+'Avec plaisir, on prépare l\'entretien de votre débroussailleuse 🔧<br><br><strong>Modèle</strong><br><strong>A</strong> FS 120 · <strong>B</strong> FS 250 · <strong>C</strong> FS 400 · <strong>D</strong> FS 460<br><strong>E</strong> Autre ou photo de la plaque 📷<br><br><strong>Créneau proposé</strong><br>1️⃣ Mercredi 25 novembre — jour proposé<br>2️⃣ Mercredi 25 novembre — autre jour proposé<br>3️⃣ Jeudi 26 novembre — jour proposé<br>4️⃣ Vendredi 27 novembre — jour proposé<br>5️⃣ Autre date<br><br>Une réponse suffit, par exemple <strong>B2</strong>. Jours proposés, disponibilité non vérifiée. L’atelier doit confirmer avant réservation.',s:1,badge:"Réponse simulée — environ 15 s"},
+   {o:1,tm:"10:13",h:'B2',s:2},
+   {o:0,tm:"10:13",h:BOT+'Votre demande de démonstration est transmise à l\'atelier SACRI ✅<br>🛠️ Entretien, débroussailleuse <strong>FS 250</strong><br>📅 <strong>Mercredi 25 novembre — autre jour proposé — demandé, pas encore réservé</strong><br>📍 Atelier SACRI, boulevard de Marseille<br>Référence de démonstration : DEMANDE-RDV-2511-400<br>Le scénario s\'arrête ici ; aucun planning d\'atelier réel n\'est consulté.',s:3}
+  ]},
+{ k:"prix", t:"Prix d'une pièce", d:"Référence et devis, sans prix inventé",
+  title:"« Chaîne pour MS 250, prix ? » : la référence tout de suite",
+  pitch:"Le client donne la pièce et le modèle. L'assistant fournit les caractéristiques de chaîne prévues pour la configuration du guide, le lien catalogue et un bouton devis. Aucun prix n'est inventé : le conseiller vérifie prix et disponibilité.",
+  steps:[["Pièce et modèle donnés","c","Client"],["Référence compatible et catalogue","a","Assistant"],["Devis demandé","c","Client"],["Prix vérifié par le conseiller","h","Conseiller"]],
+  k1:"10 s", k2:"0", k2l:"question posée avant la réponse",
+  m:[
+   {d:"Aujourd'hui"},
+   {o:1,tm:"15:31",h:'chaîne pour MS 250 prix ?',s:0},
+   {o:0,tm:"15:31",h:BOT+'Chaîne pour <strong>STIHL MS 250</strong> 🔧<br>• Pour un guide de 40 cm : Picco Micro 3/8"P, 1,3 mm, 55 maillons — vérifiez la référence du guide avant achat.<br>• Aucun prix SACRI vérifié dans le catalogue ; un conseiller vous confirme le prix et le stock.<br>• Catalogue : <a href="https://leslita06.github.io/sacri-catalogue/" target="_blank" rel="noopener">ouvrir le catalogue SACRI</a>',s:1,badge:"Réponse simulée — environ 10 s",btn:["Demander le devis","Ajouter une autre pièce","Parler à un conseiller"]},
+   {o:1,tm:"15:32",h:'Demander le devis',s:2,pick:0},
+   {sys:"Demande transmise au magasin pièces : chaîne pour MS 250"},
+   {o:0,tm:"15:44",h:HUM("Didier")+'Bonjour, Didier du magasin pièces. Je vérifie votre guide et la chaîne compatible, ainsi que le prix SACRI et la disponibilité. Je vous envoie le devis ici.',s:3}
+  ]},
 { k:"piece", t:"Pièce par photo", d:"La photo suffit pour trouver la pièce",
   title:"Le client envoie une photo, la pièce est trouvée",
   pitch:"Un exploitant forestier photographie la chaîne usée de sa tronçonneuse. L'assistant reconnaît la pièce, demande la plaque, prépare la demande ; le conseiller confirme la référence et envoie le devis.",
@@ -21,23 +62,6 @@ var S=[
    {o:1,tm:"08:31",h:'OUI. Je passe prendre ça demain matin.',s:3},
    {o:0,tm:"08:31",h:BOT+'C\'est noté ✅ Commande lancée. Votre pièce sera prête au <strong>comptoir demain matin</strong>, au nom indiqué sur le devis. Bonne journée Monsieur !',s:3,badge:"Réponse en 20 s"}
   ]},
-{ k:"devis", t:"Devis en 1 minute", d:"Trois débroussailleuses pour une plantation",
-  title:"Une demande de devis traitée dans la minute",
-  pitch:"Une gérante de plantation veut trois débroussailleuses. L'assistant précise le besoin, répond tout de suite avec le modèle conseillé et le catalogue, puis le devis chiffré part après validation du conseiller.",
-  steps:[["Besoin exprimé : 3 machines","c","Client"],["Usage précisé, modèle proposé","a","Assistant"],["Prix « à confirmer » et lien catalogue","a","Assistant"],["Devis chiffré validé et envoyé","h","Conseiller"]],
-  k1:"40 s", k2:"25 min", k2l:"pour le devis chiffré, validé par le conseiller",
-  m:[
-   {d:"Aujourd'hui"},
-   {o:1,tm:"10:04",h:'Bonjour. Il me faut 3 débroussailleuses pour ma plantation à Divo. Vous pouvez me faire un devis ?',s:0},
-   {o:0,tm:"10:04",h:BOT+'Bonjour Madame, merci de nous écrire 🙏🏾<br>Pour bien vous conseiller : c\'est pour <strong>herbe haute et broussaille</strong>, ou pour l\'entretien léger autour des parcelles ?',s:1,badge:"Réponse en 40 s",btn:["Broussaille épaisse","Entretien léger"]},
-   {o:1,tm:"10:05",h:'Broussaille épaisse. Les gars travaillent toute la journée.',s:1,pick:0},
-   {o:0,tm:"10:05",h:BOT+'Pour un travail de toute la journée en broussaille, le modèle conseillé est la <strong>STIHL FS 450</strong>, avec harnais et lame.<br>• 3 × FS 450<br>• 3 × kits harnais + lame<br>Prix : <strong>à confirmer par le conseiller</strong>, selon la quantité et les accessoires.',s:2},
-   {o:0,tm:"10:05",h:BOT+'<span class="lnk"><b>SACRI, entretien des espaces verts</b><span>Débroussailleuses, élagueuses, souffleurs STIHL</span><br><u>sacri-ci.com</u></span>Le catalogue en attendant. Le devis chiffré arrive ici dans la matinée.',s:2},
-   {sys:"Demande transmise au service commercial : le conseiller valide les prix"},
-   {o:0,tm:"10:30",h:HUM("Mariam")+'<span class="doc"><span class="pdf">PDF</span><span><span class="dn">Devis DV-2611-0223.pdf</span><span class="ds">1 page, 3 × STIHL FS 450 et kits</span></span></span>Bonjour Madame, Mariam du service commercial. Voici le devis, prix vérifiés. Pour la livraison à Divo, je vous confirme les conditions dès votre accord.',s:3},
-   {o:1,tm:"10:41",h:'Merci, je regarde ça avec mon associé et je reviens vers vous.',s:3},
-   {o:0,tm:"10:41",h:BOT+'Avec plaisir Madame. Mariam reste votre contact, on est là pour toute question 🙏🏾',s:3,badge:"Réponse en 15 s"}
-  ]},
 { k:"atelier", t:"Suivi atelier", d:"De la réception à « prête à retirer »",
   title:"Le client suit sa machine sans appeler",
   pitch:"Un entrepreneur dépose sa tronçonneuse à l'atelier. Il reçoit chaque étape sur WhatsApp : réception, diagnostic, devis de réparation, machine prête. Il n'a plus besoin d'appeler pour savoir où elle en est.",
@@ -53,26 +77,22 @@ var S=[
    {o:0,tm:"11:20",h:BOT+'Merci Monsieur, accord enregistré ✅ La réparation démarre aujourd\'hui. Machine prête prévue <strong>jeudi 19</strong>.',s:2,badge:"Réponse en 30 s"},
    {d:"Jeudi 19 novembre"},
    {o:1,tm:"08:02",h:'Bonjour, ma machine est prête ?',s:2},
-   {o:0,tm:"08:02",h:BOT+'Bonjour Monsieur ! Le technicien termine l\'essai ce matin. Je vous écris dès qu\'elle est prête 👍🏾',s:2,badge:"Réponse en 25 s"},
+   {o:0,tm:"08:02",h:BOT+'Bonjour Monsieur ! Le technicien termine l\'essai ce matin. Je vous écris dès qu\'elle est prête 👍🏾',s:2,badge:"Réponse simulée — environ 25 s"},
    {o:0,tm:"10:45",h:BOT+'Bonne nouvelle Monsieur Bamba : votre MS 250 est <strong>prête à retirer</strong> 🎉<br>• Essai moteur validé par le technicien<br>• À retirer au comptoir de l\'atelier<br>• Présentez le bon BR-2026-0431',s:3,badge:"Prête à retirer"},
    {o:1,tm:"10:52",h:'Merci beaucoup, j\'arrive à 14 h. Vous êtes forts ! 💪🏾',s:3}
   ]},
-{ k:"entretien", t:"Rappel d'entretien", d:"Avant la saison, rendez-vous en 2 clics",
-  title:"Le rappel d'entretien qui remplit l'atelier avant la saison",
-  pitch:"Avant la grande saison des pluies, l'assistant écrit aux clients dont la machine n'a pas été révisée depuis six mois. Le client choisit son créneau en deux clics ; l'atelier sait qui arrive et pour quoi.",
-  steps:[["Rappel envoyé avant la saison","a","Assistant"],["Le client choisit un créneau","c","Client"],["Rendez-vous confirmé à l'atelier","a","Assistant"],["Rappel la veille","a","Assistant"]],
-  k1:"20 s", k2:"2 clics", k2l:"pour prendre rendez-vous à l'atelier",
+{ k:"entretien", t:"Exemple de rappel d'entretien", d:"Message et créneau à confirmer par l'atelier",
+  title:"Préparer un rappel d'entretien sans inventer d'historique",
+  pitch:"Exemple de campagne à activer seulement après validation du calendrier, des clients et des machines réellement concernées. Chaque créneau est une demande, jusqu'à confirmation par l'atelier.",
+  steps:[["Rappel soumis à validation","h","Conseiller"],["Le client demande un créneau","c","Client"],["Créneau proposé","a","Assistant"],["Confirmation de l'atelier","h","Atelier"]],
+  k1:"exemple", k2:"0", k2l:"réservation réelle depuis cette page",
   m:[
-   {d:"Lundi 15 mars"},
-   {o:0,tm:"09:00",h:BOT+'Bonjour Madame Koffi 👋🏾<br>La <strong>saison des pluies</strong> arrive, et la broussaille avec. Votre débroussailleuse <strong>STIHL FS 400</strong> n\'a pas été révisée depuis 7 mois.<br>Une révision avant la saison : bougie, filtre, lame, réglage.',s:0,btn:["Prendre rendez-vous","Me le rappeler plus tard"]},
-   {o:1,tm:"09:34",h:'Prendre rendez-vous',s:1,pick:0},
-   {o:0,tm:"09:34",h:BOT+'Très bien Madame. Voici les créneaux libres à l\'atelier :',s:1,badge:"Réponse en 20 s",btn:["Mercredi 17 mars, 9 h","Jeudi 18 mars, 9 h","Jeudi 18 mars, 14 h"]},
-   {o:1,tm:"09:35",h:'Jeudi 18 mars, 9 h',s:1,pick:1},
-   {o:0,tm:"09:35",h:BOT+'C\'est réservé ✅<br>• <strong>Jeudi 18 mars à 9 h</strong>, atelier SACRI, boulevard de Marseille<br>• Révision STIHL FS 400<br>• Prix de la révision confirmé par le conseiller à l\'arrivée<br>Je vous rappelle la veille.',s:2},
-   {o:1,tm:"09:36",h:'Merci, c\'est bien organisé comme ça 👍🏾',s:2},
-   {d:"Mercredi 17 mars"},
-   {o:0,tm:"17:00",h:BOT+'Bonsoir Madame Koffi, petit rappel : votre rendez-vous atelier, c\'est <strong>demain jeudi à 9 h</strong>. Pensez à vider le réservoir avant de venir 🙏🏾',s:3,btn:["Je confirme","Changer d'heure"]},
-   {o:1,tm:"17:12",h:'Je confirme',s:3,pick:0}
+   {d:"Exemple de conversation"},
+   {o:0,tm:"09:00",h:BOT+'Bonjour. Souhaitez-vous faire l\'entretien de votre débroussailleuse ? Cette démonstration n\'utilise aucun historique client réel.',s:0,btn:["Demander un créneau","Pas maintenant"]},
+   {o:1,tm:"09:34",h:'Demander un créneau',s:1,pick:0},
+   {o:0,tm:"09:34",h:BOT+'Voici des créneaux indicatifs ; l\'atelier doit vérifier et confirmer leur disponibilité.',s:1,badge:"Exemple uniquement",btn:["Mercredi matin","Jeudi matin","Autre date"]},
+   {o:1,tm:"09:35",h:'Jeudi matin',s:2,pick:1},
+   {o:0,tm:"09:35",h:BOT+'Votre demande est transmise à l\'atelier. <strong>Aucun rendez-vous n\'est réservé</strong> tant que l\'atelier ne vous a pas confirmé la disponibilité.',s:3}
   ]}
 ];
 
@@ -108,7 +128,7 @@ function el(m){
   if(m.badge)h+='<br><span class="badge'+(/Réponse/.test(m.badge)?'':' o')+'">'+m.badge+'</span>';
   h+='<span class="meta">'+m.tm+(m.o?'<span class="tk">✓✓</span>':'')+'</span>';
   if(m.btn)h+='<span class="btns">'+m.btn.map(function(x){return '<span>'+x+'</span>';}).join("")+'</span>';
-  b.innerHTML=h;w.appendChild(b);return w;
+  b.innerHTML=safeMsg(h);w.appendChild(b);return w;
 }
 function pickPrev(m){
   if(m.pick===undefined)return;
