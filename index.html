@@ -8,9 +8,9 @@
 <title>SACRI, le service client sur WhatsApp</title>
 <link rel="icon" href="data:,">
 <link rel="preload" href="assets/Inter.ttf" as="font" type="font/ttf" crossorigin>
-<link rel="stylesheet" href="assets/style.css?v=20261124g">
-<link rel="stylesheet" href="assets/envoi.css?v=20261124g">
-<link rel="stylesheet" href="assets/charte.css?v=20261124g">
+<link rel="stylesheet" href="assets/style.css?v=20261124i">
+<link rel="stylesheet" href="assets/envoi.css?v=20261124i">
+<link rel="stylesheet" href="assets/charte.css?v=20261124i">
 </head>
 <body>
 <div class="app">
@@ -19,7 +19,7 @@
   <div class="brand"><img src="assets/logo-sacri.png" alt="SACRI"><div><p class="bn">Service client</p><p class="bs">sur WhatsApp</p></div></div>
   <nav class="nav-s">
     <p class="nl">Le client écrit</p>
-    <a class="ni" href="#conversations" data-m="conversations"><i data-i="message-circle"></i>Conversations<span class="k">6</span></a>
+    <a class="ni" href="#conversations" data-m="conversations"><i data-i="message-circle"></i>Conversations<span class="k">7</span></a>
     <p class="nl">SACRI écrit</p>
     <a class="ni" href="#automatique" data-m="automatique"><i data-i="zap"></i>Envoi automatique</a>
     <a class="ni" href="#campagne" data-m="campagne"><i data-i="users"></i>Campagne</a>
@@ -47,7 +47,7 @@
     <div class="vh">
       <h1>Une réponse en moins d'une minute, à toute heure</h1>
       <p class="lede">L'assistant SACRI répond tout de suite sur WhatsApp, même à une note vocale : il diagnostique la panne, propose les modèles et les créneaux au lieu de les demander, donne la référence de la pièce et tient le client informé de sa machine. Un conseiller reprend la main dès qu'il faut un prix ou un engagement.</p>
-      <p class="valide"><span class="ic" aria-hidden="true">✓</span>Un conseiller SACRI valide chaque devis et chaque prix avant l'envoi.</p>
+      <p class="valide"><span class="ic" aria-hidden="true">✓</span>Un conseiller SACRI valide chaque devis et chaque prix avant l'envoi. Chaque réclamation part en alerte à la direction dans la minute.</p>
     </div>
 
     <nav class="scen" id="scen" aria-label="Choisir une conversation"></nav>
@@ -73,8 +73,27 @@
         </div>
       </div>
 
+      <div class="dgw" id="dg-wrap">
+        <p class="dg-cap" id="dg-cap" hidden><i data-i="bell"></i>Au même moment, le téléphone du directeur général</p>
+        <div class="phone dg" id="phone-dg" hidden>
+          <div class="notch" aria-hidden="true"></div>
+          <div class="screen">
+            <div class="sbar" aria-hidden="true"><span id="dg-clock">08:40</span><span class="sig">4G</span></div>
+            <div class="wa-head">
+              <span class="back" aria-hidden="true">‹</span>
+              <span class="av"><img src="assets/logo-sacri.png" alt=""></span>
+              <div class="who">
+                <p class="nm">Alertes réclamations SACRI</p>
+                <p class="st">Directeur général</p>
+              </div>
+            </div>
+            <div class="chat" id="dg-chat" aria-live="polite"></div>
+          </div>
+        </div>
+      </div>
+
       <aside class="side">
-        <p class="sn" id="s-num">Conversation 1 sur 6</p>
+        <p class="sn" id="s-num">Conversation 1 sur 7</p>
         <h2 id="s-title"></h2>
         <p class="sp" id="s-pitch"></p>
         <ol class="steps" id="s-steps"></ol>
@@ -117,9 +136,9 @@
 </nav>
 </div>
 
-<script src="assets/icons.js?v=20261124g"></script>
-<script src="assets/app.js?v=20261124g"></script>
-<script src="assets/envoi.js?v=20261124g"></script>
-<script src="assets/shell.js?v=20261124g"></script>
+<script src="assets/icons.js?v=20261124i"></script>
+<script src="assets/app.js?v=20261124i"></script>
+<script src="assets/envoi.js?v=20261124i"></script>
+<script src="assets/shell.js?v=20261124i"></script>
 </body>
 </html>

@@ -86,6 +86,27 @@ var S=[
    {o:0,tm:"10:45",h:BOT+'Bonne nouvelle Monsieur Bamba : votre MS 250 est <strong>prête à retirer</strong> 🎉<br>• Essai moteur validé par le technicien<br>• À retirer au comptoir de l\'atelier<br>• Présentez le bon BR-2026-0431',s:3,badge:"Prête à retirer"},
    {o:1,tm:"10:52",h:'Merci beaucoup, j\'arrive à 14 h. Vous êtes forts ! 💪🏾',s:3}
   ]},
+{ k:"reclamation", t:"Réclamation", d:"La direction alertée dans la minute", dg:1,
+  title:"Une réclamation, et la direction le sait tout de suite",
+  pitch:"Un client écrit : sa débroussailleuse, réparée à l'atelier, retombe en panne. Il donne le numéro de série. L'assistant s'excuse, retrouve la machine et ses passages à l'atelier, ouvre la réclamation avec son numéro et donne l'heure du rappel. Au même moment, le directeur général reçoit l'alerte sur son téléphone. Sans réponse au client, une nouvelle alerte part à 24 h au responsable de la société, puis à 48 h au directeur général.",
+  steps:[["Plainte avec le numéro de série","c","Client"],["Machine et passages à l'atelier retrouvés","a","Assistant"],["Réclamation R-2026-104 ouverte, direction alertée","a","Automatique"],["Client rappelé par l'atelier","h","Atelier"],["Réparée, réclamation close","h","Atelier"]],
+  k1:"1 min", k2:"42 min", k2l:"avant le rappel du technicien",
+  m:[
+   {d:"Mardi 10 novembre"},
+   {o:1,tm:"08:38",h:'Bonjour. Ma débroussailleuse déposée chez vous le 4&nbsp;novembre est encore en panne, le lanceur a recassé. Numéro de série 2209&nbsp;8835. Je ne suis pas content.',s:0},
+   {o:0,tm:"08:39",h:BOT+'Toutes nos excuses, Monsieur Kouadio 🙏🏾 Ce n\'est pas normal qu\'elle retombe en panne après notre réparation.<br>J\'ai retrouvé votre machine :<br>• STIHL FS 250, n° de série <strong>2209&nbsp;8835</strong>, achetée le 8&nbsp;juin 2026<br>• Déjà venue à l\'atelier le <strong>7&nbsp;septembre</strong> (BR-2026-0341) et le <strong>4&nbsp;novembre</strong> (BR-2026-0417), pour le lanceur',s:1,badge:"Réponse en 1&nbsp;min"},
+   {o:0,tm:"08:39",h:BOT+'Votre réclamation est ouverte : <strong><span class="nw">R-2026-104</span></strong> ✅<br>Le responsable de l\'atelier et la direction sont prévenus.<br>📞 Un technicien vous rappelle sur ce numéro <strong>avant 10&nbsp;h&nbsp;40</strong>.',s:2},
+   {g:1,tm:"08:40",h:'<span class="who-l al">🔴 Nouvelle réclamation</span><strong><span class="nw">R-2026-104</span></strong>, SACRI<br>👤 M. Serge Kouadio<br>⚙️ STIHL FS 250, n° 2209&nbsp;8835<br>⚠️ <strong>2e retour en 60 jours</strong> : 7&nbsp;septembre puis 4&nbsp;novembre, même panne (lanceur cassé)<br>🛠️ Responsable de l\'atelier SACRI prévenu<br>📞 Rappel du client prévu <strong>avant 10&nbsp;h&nbsp;40</strong><br>⏱️ Sans réponse : alerte au responsable SACRI à 24&nbsp;h, à vous à 48&nbsp;h',s:2},
+   {g:1,tm:"08:40",h:'<span class="mailn"><b>E-mail</b> · Réclamation <span class="nw">R-2026-104</span> : M. Serge Kouadio, FS 250, 2e retour en 60 jours</span>',s:2},
+   {o:1,tm:"08:41",h:'D\'accord, j\'attends l\'appel.',s:2},
+   {g:1,tm:"08:55",h:'<span class="who-l ok">Prise en charge</span><span class="nw">R-2026-104</span> : Yao K., technicien SACRI, prend le dossier.',s:2},
+   {sys:"Appel de l'atelier SACRI à 9 h 20 : le technicien rappelle le client"},
+   {o:0,tm:"09:26",h:HUM("Yao")+'Merci Monsieur Kouadio pour votre patience. Comme convenu au téléphone, déposez la machine quand vous voulez : elle passe en priorité, sans attente.',s:3},
+   {g:1,tm:"09:26",h:'<span class="who-l ok">Client rappelé</span><span class="nw">R-2026-104</span> : client rappelé à 9&nbsp;h&nbsp;20, <strong>42&nbsp;min</strong> après son message. Les alertes des 24&nbsp;h et des 48&nbsp;h ne partiront pas.',s:3},
+   {d:"Jeudi 12 novembre"},
+   {o:0,tm:"17:00",h:BOT+'Votre FS 250 est réparée ✅<br>Le lanceur est remplacé et le technicien vous a expliqué la cause.<br>La réclamation <strong><span class="nw">R-2026-104</span></strong> est close. Encore pardon pour ce désagrément, Monsieur Kouadio.',s:4},
+   {g:1,tm:"17:01",h:'<span class="who-l ok">Réclamation close</span><span class="nw">R-2026-104</span> : lanceur remplacé, cause expliquée au client. Durée totale : 2&nbsp;j 8&nbsp;h.',s:4}
+  ]},
 { k:"entretien", t:"Exemple de rappel d'entretien", d:"Message et créneau à confirmer par l'atelier",
   title:"Préparer un rappel d'entretien sans inventer d'historique",
   pitch:"Exemple de campagne à activer seulement après validation du calendrier, des clients et des machines réellement concernées. Chaque créneau est une demande, jusqu'à confirmation par l'atelier.",
@@ -102,7 +123,7 @@ var S=[
 ];
 
 var $=function(id){return document.getElementById(id);};
-var chat=$("chat"),status=$("status"),clock=$("clock");
+var chat=$("chat"),status=$("status"),clock=$("clock"),dchat=$("dg-chat"),dclock=$("dg-clock"),stage=document.querySelector(".stage");
 var cur=0,timers=[],run=0;
 var q=new URLSearchParams(location.search);
 
@@ -127,7 +148,7 @@ function mark(st){var li=$("s-steps").children;for(var j=0;j<li.length;j++)li[j]
 function el(m){
   if(m.d){var d=document.createElement("div");d.className="day";d.textContent=m.d;return d;}
   if(m.sys){var y=document.createElement("div");y.className="sys";y.textContent=m.sys;return y;}
-  var w=document.createElement("div");w.className="m "+(m.o?"out":"in");
+  var w=document.createElement("div");w.className="m "+(m.o?"out":"in")+(m.g?" al":"");
   var b=document.createElement("div");b.className="b";
   var h=m.h;
   if(m.badge)h+='<br><span class="badge'+(/Réponse/.test(m.badge)?'':' o')+'">'+m.badge+'</span>';
@@ -140,18 +161,21 @@ function pickPrev(m){
   var all=chat.querySelectorAll(".btns");var last=all[all.length-1];
   if(last&&last.children[m.pick])last.children[m.pick].classList.add("on");
 }
-function scroll(){chat.scrollTop=chat.scrollHeight;}
+function scroll(){chat.scrollTop=chat.scrollHeight;dchat.scrollTop=dchat.scrollHeight;}
+function put(m){if(m.g){dchat.appendChild(el(m));dclock.textContent=m.tm;}else{chat.appendChild(el(m));if(m.d&&S[cur].dg)dchat.appendChild(el(m));}}
 function clear(){timers.forEach(clearTimeout);timers=[];}
 function later(f,ms){timers.push(setTimeout(f,ms));}
 function play(i,all){
-  clear();run++;cur=i;chat.innerHTML="";side(i);mark(-1);status.textContent="compte professionnel";
+  clear();run++;cur=i;chat.innerHTML="";dchat.innerHTML="";side(i);
+  var dg=!!S[i].dg;stage.classList.toggle("duo",dg);$("phone-dg").hidden=!dg;$("dg-cap").hidden=!dg;mark(-1);status.textContent="compte professionnel";
   var s=S[i],t=500,me=run;
   if(all){
-    s.m.forEach(function(m){chat.appendChild(el(m));pickPrev(m);if(m.tm)clock.textContent=m.tm;});
-    mark(s.steps.length-1);chat.scrollTop=0;return;
+    s.m.forEach(function(m){put(m);pickPrev(m);if(m.tm&&!m.g)clock.textContent=m.tm;});
+    mark(s.steps.length-1);chat.scrollTop=0;dchat.scrollTop=0;return;
   }
   s.m.forEach(function(m){
-    if(m.d||m.sys){later(function(){if(me!==run)return;chat.appendChild(el(m));scroll();},t);t+=700;return;}
+    if(m.d||m.sys){later(function(){if(me!==run)return;put(m);scroll();},t);t+=700;return;}
+    if(m.g){later(function(){if(me!==run)return;put(m);mark(m.s);scroll();},t);t+=1400;return;}
     if(!m.o){
       later(function(){if(me!==run)return;status.textContent="en train d'écrire…";
         var ty=document.createElement("div");ty.className="m in typing";ty.innerHTML='<div class="b"><span class="dots"><i></i><i></i><i></i></span></div>';
