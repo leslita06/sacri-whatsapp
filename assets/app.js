@@ -111,7 +111,7 @@ function nav(){
   S.forEach(function(s,i){
     var b=document.createElement("button");b.type="button";
     b.innerHTML='<span class="n">'+(i+1)+'</span><span class="t">'+s.t+'<span class="d">'+s.d+'</span></span>';
-    b.addEventListener("click",function(){play(i,false);});
+    b.addEventListener("click",function(){play(i,true);});
     n.appendChild(b);
   });
 }
@@ -148,7 +148,7 @@ function play(i,all){
   var s=S[i],t=500,me=run;
   if(all){
     s.m.forEach(function(m){chat.appendChild(el(m));pickPrev(m);if(m.tm)clock.textContent=m.tm;});
-    mark(s.steps.length-1);scroll();return;
+    mark(s.steps.length-1);chat.scrollTop=0;return;
   }
   s.m.forEach(function(m){
     if(m.d||m.sys){later(function(){if(me!==run)return;chat.appendChild(el(m));scroll();},t);t+=700;return;}
@@ -170,7 +170,7 @@ $("replay").addEventListener("click",function(){play(cur,false);});
 $("skip").addEventListener("click",function(){play(cur,true);});
 var start=Math.max(0,Math.min(S.length-1,(parseInt(q.get("c"),10)||1)-1)),started=false;
 window.SacriConv={
-  start:function(){if(started)return;started=true;play(start,q.get("tout")==="1");},
+  start:function(){if(started)return;started=true;play(start,q.get("anim")!=="1");},
   stop:function(){clear();run++;started=false;}
 };
 })();
