@@ -125,3 +125,5 @@ h1{font:600 26px/1.2 var(--sans);letter-spacing:-.025em}
   .k{font-size:32px}
   .kpi>div{padding:14px}
 }
+
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}

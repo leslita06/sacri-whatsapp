@@ -2,33 +2,38 @@
 "use strict";
 var BOT='<span class="who-l bot">Assistant SACRI</span>';
 var CATALOGUE="https://leslita06.github.io/sacri-catalogue/";
-function safeMsg(html){return html.replace(/(https?:\/\/[^ <\\"']+|sacri-catalogue)/g,function(u){var h=u==="sacri-catalogue"?CATALOGUE:u;return '<a href="'+h+'" target="_blank" rel="noopener">'+(u==="sacri-catalogue"?'ouvrir le catalogue SACRI':u)+'</a>';});}
+var CAT='<a class="lk" href="'+CATALOGUE+'" target="_blank" rel="noopener">Ouvrir le catalogue</a>';
 var HUM=function(n){return '<span class="who-l hum">'+n+', conseiller SACRI</span>';};
 var S=[
 { k:"panne", t:"Panne en note vocale", d:"Diagnostic dès le premier message",
   title:"Le client parle, l'assistant diagnostique tout de suite",
-  pitch:"Un exploitant envoie une note vocale : sa tronçonneuse ne démarre plus. L'assistant transcrit la note, répond sans menu, s'appuie sur la notice STIHL, donne les vérifications sans promettre de prix, puis propose trois suites. Le rendez-vous reste une demande jusqu'à confirmation de l'atelier.",
+  pitch:"Un exploitant envoie une note vocale : sa tronçonneuse ne démarre plus. L'assistant transcrit la note et répond en deux lignes : les trois vérifications de la notice STIHL, puis trois boutons. Le détail ne vient que si la panne persiste. Le rendez-vous reste une demande jusqu'à confirmation de l'atelier.",
   steps:[["Note vocale du client","c","Client"],["Transcrite et comprise","a","Assistant"],["Diagnostic issu de la notice","a","Assistant"],["Demande d'atelier à confirmer","c","Client"]],
   k1:"25 s", k2:"0", k2l:"question posée avant le diagnostic",
   m:[
    {d:"Aujourd'hui"},
    {o:1,tm:"07:42",h:'<span class="voice"><span class="vp">▶</span><span class="vw"></span><span class="vd">0:06</span></span><span class="vt">« Ma tronçonneuse-là ne démarre plus, qu\'est-ce que je fais ? »</span>',s:0},
-   {o:0,tm:"07:42",h:BOT+'Une tronçonneuse qui ne démarre plus, c\'est souvent simple 🔧 À vérifier dans l\'ordre, moteur arrêté, frein de chaîne serré :<br>1. <strong>Carburant</strong> frais, mélange 1:50 (20 ml d\'huile 2 temps pour 1 litre).<br>2. <strong>Moteur noyé</strong> : bougie mouillée ? Séchez-la, tirez le lanceur 5 ou 6 fois et redémarrez sans starter.<br>3. <strong>Bougie</strong> noire ou usée : nettoyer ou remplacer.<br>4. <strong>Filtre à air</strong> : nettoyer, remplacer s\'il reste encrassé.<br>5. <strong>Démarrage</strong> : starter fermé à froid, ouvert au premier « pouf », décompresseur appuyé si votre modèle en a un.<br>🔩 Pièces le plus souvent en cause : <strong>bougie</strong> et <strong>filtre à air</strong>. Leur prix vous est confirmé ici par un conseiller, avec la disponibilité.<br>Catalogue : sacri-catalogue',s:2,badge:"Réponse simulée — environ 25 s",btn:["Ça repart 👍","Toujours en panne : la déposer à l'atelier","Être rappelé par un technicien"]},
-   {o:1,tm:"07:51",h:'Toujours en panne : la déposer à l\'atelier',s:2,pick:1},
+   {o:0,tm:"07:42",h:BOT+'Pas de panique, c\'est souvent simple 🔧<br>Vérifiez dans cet ordre : <strong>carburant frais</strong>, <strong>bougie</strong>, <strong>filtre à air</strong>.',s:2,badge:"Réponse simulée, environ 25 s"},
+   {o:0,tm:"07:42",h:BOT+'Et après ces vérifications ?',s:2,btn:["Ça repart 👍","Toujours en panne","Je l'apporte à l'atelier"]},
+   {o:1,tm:"07:49",h:'Toujours en panne',s:2,pick:1},
+   {o:0,tm:"07:49",h:BOT+'Alors, deux points précis, moteur arrêté :<br>• <strong>Mélange</strong> : 1:50, soit 20 ml d\'huile 2 temps pour 1 litre d\'essence.<br>• <strong>Moteur noyé</strong> (odeur d\'essence) : séchez la bougie, tirez le lanceur 5 ou 6 fois, redémarrez sans starter.<br>Catalogue des pièces : '+CAT,s:2,btn:["Ça repart 👍","Je l'apporte à l'atelier","Être rappelé par un technicien"]},
+   {o:1,tm:"07:51",h:'Je l\'apporte à l\'atelier',s:2,pick:1},
    {o:0,tm:"07:51",h:BOT+'D\'accord, on la répare à l\'atelier 🔧<br>Prochains créneaux à l\'atelier (lun.-ven., 8 h-17 h) :',s:3,btn:["Mercredi 25 novembre, matin, dès 8 h","Jeudi 26 novembre, matin, dès 8 h","Vendredi 27 novembre, après-midi, avant 17 h","Autre date"]},
    {o:1,tm:"07:52",h:'Jeudi 26 novembre, matin, dès 8 h',s:3,pick:1},
    {o:0,tm:"07:52",h:BOT+'Votre demande de rendez-vous est transmise à l\'atelier SACRI ✅<br>🛠️ Réparation, tronçonneuse<br>📅 <strong>Jeudi 26 novembre, matin, dès 8 h</strong><br>📍 Atelier SACRI, boulevard de Marseille, face à la SIVOA<br>L\'atelier confirme la disponibilité ici même : le créneau n\'est pas encore réservé.',s:3}
   ]},
-{ k:"revision", t:"Révision en une réponse", d:"Modèles et créneaux proposés",
-  title:"Une demande d'entretien en une seule réponse",
-  pitch:"Une gérante de plantation veut faire réviser sa débroussailleuse. L'assistant ne demande ni le modèle ni le jour : il propose les modèles STIHL courants et les trois prochains créneaux de l'atelier. Elle répond « B2 » ; une demande est transmise, l'atelier doit confirmer.",
-  steps:[["Demande de révision","c","Client"],["Modèles et créneaux proposés","a","Assistant"],["Une réponse : B2","c","Client"],["Demande transmise pour confirmation","a","Assistant"]],
-  k1:"15 s", k2:"1", k2l:"seule réponse avant la demande d'atelier",
+{ k:"revision", t:"Révision en deux touches", d:"Modèles et créneaux proposés",
+  title:"Une demande d'entretien en deux touches",
+  pitch:"Une gérante de plantation veut faire réviser sa débroussailleuse. L'assistant ne demande ni le modèle ni le jour : il propose les modèles STIHL courants et les trois prochains créneaux de l'atelier. Elle touche son modèle, puis son créneau, sans rien taper ; une demande est transmise, l'atelier doit confirmer.",
+  steps:[["Demande de révision","c","Client"],["Modèles et créneaux proposés","a","Assistant"],["Modèle puis créneau touchés","c","Client"],["Demande transmise pour confirmation","a","Assistant"]],
+  k1:"15 s", k2:"2", k2l:"touches, sans rien écrire",
   m:[
    {d:"Aujourd'hui"},
    {o:1,tm:"10:12",h:'Je veux réviser ma débroussailleuse',s:0},
-   {o:0,tm:"10:12",h:BOT+'Avec plaisir, on prépare l\'entretien de votre débroussailleuse 🔧<br><br><strong>Modèle</strong><br><strong>A</strong> FS 120 · <strong>B</strong> FS 250 · <strong>C</strong> FS 400 · <strong>D</strong> FS 460<br><strong>E</strong> Autre ou photo de la plaque 📷<br><br><strong>Prochains créneaux</strong> (lun.-ven., 8 h-17 h)<br>1️⃣ Mercredi 25 novembre, matin, dès 8 h<br>2️⃣ Jeudi 26 novembre, matin, dès 8 h<br>3️⃣ Vendredi 27 novembre, après-midi, avant 17 h<br>4️⃣ Autre date<br><br>Répondez en une fois, par exemple <strong>B2</strong>, ou par note vocale.',s:1,badge:"Réponse simulée — environ 15 s"},
-   {o:1,tm:"10:13",h:'B2',s:2},
+   {o:0,tm:"10:12",h:BOT+'Avec plaisir, on prépare l\'entretien de votre débroussailleuse 🔧<br>Touchez votre <strong>modèle</strong> :',s:1,badge:"Réponse simulée, environ 15 s",btn:["FS 120","FS 250","FS 400","FS 460","Autre ou photo de la plaque 📷"]},
+   {o:1,tm:"10:13",h:'FS 250',s:2,pick:1},
+   {o:0,tm:"10:13",h:BOT+'FS 250 noté ✅ Touchez un <strong>créneau</strong> (lun.-ven., 8 h-17 h) :',s:2,btn:["Mercredi 25 novembre, matin","Jeudi 26 novembre, matin","Vendredi 27 novembre, après-midi","Autre date"]},
+   {o:1,tm:"10:13",h:'Jeudi 26 novembre, matin',s:2,pick:1},
    {o:0,tm:"10:13",h:BOT+'Votre demande de rendez-vous est transmise à l\'atelier SACRI ✅<br>🛠️ Entretien, débroussailleuse <strong>FS 250</strong><br>📅 <strong>Jeudi 26 novembre, matin, dès 8 h</strong><br>📍 Atelier SACRI, boulevard de Marseille, face à la SIVOA<br>Référence : DEMANDE-RDV-2611<br>L\'atelier confirme la disponibilité ici même : le créneau n\'est pas encore réservé.',s:3}
   ]},
 { k:"prix", t:"Prix d'une pièce", d:"Référence et devis, sans prix inventé",
@@ -39,7 +44,7 @@ var S=[
   m:[
    {d:"Aujourd'hui"},
    {o:1,tm:"15:31",h:'chaîne pour MS 250 prix ?',s:0},
-   {o:0,tm:"15:31",h:BOT+'Chaîne pour <strong>STIHL MS 250</strong> 🔧<br>• Référence d\'origine : Picco Micro 3 (3/8"P, 1,3 mm, 55 maillons) pour le guide d\'origine de 40 cm. Vérifiez les chiffres gravés sur votre guide : s\'ils diffèrent, le conseiller ajuste.<br>• Prix : confirmé ici par un conseiller SACRI, avec la disponibilité en magasin. Touchez « Demander le devis » et la demande part tout de suite.<br>• Catalogue : sacri-catalogue',s:1,badge:"Réponse simulée — environ 10 s",btn:["Demander le devis","Ajouter une autre pièce","Parler à un conseiller"]},
+   {o:0,tm:"15:31",h:BOT+'Chaîne pour <strong>STIHL MS 250</strong> 🔧<br>• Référence d\'origine : Picco Micro 3 (3/8"P, 1,3 mm, 55 maillons) pour le guide d\'origine de 40 cm. Vérifiez les chiffres gravés sur votre guide : s\'ils diffèrent, le conseiller ajuste.<br>• Prix : confirmé ici par un conseiller SACRI, avec la disponibilité en magasin. Touchez « Demander le devis » et la demande part tout de suite.<br>• Catalogue : '+CAT,s:1,badge:"Réponse simulée, environ 10 s",btn:["Demander le devis","Ajouter une autre pièce","Parler à un conseiller"]},
    {o:1,tm:"15:32",h:'Demander le devis',s:2,pick:0},
    {sys:"Demande transmise au magasin pièces : chaîne pour MS 250"},
    {o:0,tm:"15:44",h:HUM("Didier")+'Bonjour, Didier du magasin pièces. Je vérifie votre guide et la chaîne compatible, ainsi que le prix SACRI et la disponibilité. Je vous envoie le devis ici.',s:3}
@@ -77,7 +82,7 @@ var S=[
    {o:0,tm:"11:20",h:BOT+'Merci Monsieur, accord enregistré ✅ La réparation démarre aujourd\'hui. Machine prête prévue <strong>jeudi 19</strong>.',s:2,badge:"Réponse en 30 s"},
    {d:"Jeudi 19 novembre"},
    {o:1,tm:"08:02",h:'Bonjour, ma machine est prête ?',s:2},
-   {o:0,tm:"08:02",h:BOT+'Bonjour Monsieur ! Le technicien termine l\'essai ce matin. Je vous écris dès qu\'elle est prête 👍🏾',s:2,badge:"Réponse simulée — environ 25 s"},
+   {o:0,tm:"08:02",h:BOT+'Bonjour Monsieur ! Le technicien termine l\'essai ce matin. Je vous écris dès qu\'elle est prête 👍🏾',s:2,badge:"Réponse simulée, environ 25 s"},
    {o:0,tm:"10:45",h:BOT+'Bonne nouvelle Monsieur Bamba : votre MS 250 est <strong>prête à retirer</strong> 🎉<br>• Essai moteur validé par le technicien<br>• À retirer au comptoir de l\'atelier<br>• Présentez le bon BR-2026-0431',s:3,badge:"Prête à retirer"},
    {o:1,tm:"10:52",h:'Merci beaucoup, j\'arrive à 14 h. Vous êtes forts ! 💪🏾',s:3}
   ]},
@@ -128,7 +133,7 @@ function el(m){
   if(m.badge)h+='<br><span class="badge'+(/Réponse/.test(m.badge)?'':' o')+'">'+m.badge+'</span>';
   h+='<span class="meta">'+m.tm+(m.o?'<span class="tk">✓✓</span>':'')+'</span>';
   if(m.btn)h+='<span class="btns">'+m.btn.map(function(x){return '<span>'+x+'</span>';}).join("")+'</span>';
-  b.innerHTML=safeMsg(h);w.appendChild(b);return w;
+  b.innerHTML=h;w.appendChild(b);return w;
 }
 function pickPrev(m){
   if(m.pick===undefined)return;

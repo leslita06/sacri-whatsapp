@@ -55,7 +55,7 @@
 .feed{list-style:none}
 .fi{display:grid;grid-template-columns:44px 30px minmax(0,1fr);gap:10px;padding:11px 0;border-top:1px solid var(--line)}
 .fi.new{animation:in .45s ease-out}
-@keyframes in{from{opacity:0;transform:translateY(-6px)}}
+@keyframes in{from{transform:translateY(-6px)}}
 .fh{font:600 12.5px/1.6 var(--sans);color:var(--g)}
 .fic{width:30px;height:30px;border-radius:8px;background:var(--o3);color:var(--o);display:flex;align-items:center;justify-content:center}
 .fic svg{width:15px;height:15px}
@@ -157,3 +157,5 @@
  .wa-c{min-height:340px}
  .cp-steps li{font-size:12px;padding:5px 9px 5px 5px}
 }
+
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
