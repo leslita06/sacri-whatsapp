@@ -1,0 +1,50 @@
+/* SACRI 2027 : même charte que le tableau de bord SAV (palette ardoise, Plus Jakarta Sans pour les titres). */
+@font-face{font-family:"Jakarta";src:url("PlusJakartaSans.ttf") format("truetype");font-weight:200 800;font-display:swap}
+:root{
+  --bg:#F8FAFC;--card:#FFFFFF;--line:#E2E8F0;--line2:#EEF2F6;--hov:#F1F5F9;--sbg:#FFFFFF;
+  --ink:#0F172A;--ink2:#334155;--mut:#64748B;--mut2:#94A3B8;
+  --acc:#E95B0F;--accb:#FFF1E8;--acct:#C2410C;--grn:#047857;--grnb:#ECFDF5;--red:#DC2626;
+  --o:#E95B0F;--o2:#FDBA8C;--o3:#FFF1E8;--g:#64748B;--g2:#CBD5E1;--g3:#F1F5F9;--soft:#F8FAFC;--green:#047857;--green3:#ECFDF5;
+  --r:16px;--sh:0 1px 2px rgba(15,23,42,.04),0 4px 16px rgba(15,23,42,.05);
+  --disp:"Jakarta","Inter",system-ui,sans-serif
+}
+body{background:var(--bg);font-variant-numeric:tabular-nums}
+h1{font:700 28px/1.2 var(--disp);letter-spacing:-.025em;color:var(--ink)}
+.side h2{font:700 21px/1.25 var(--disp);letter-spacing:-.02em}
+.cap,.tabs a b,.wa-h b{font-family:var(--disp)}
+.k{font-family:var(--disp);letter-spacing:-.03em}
+
+/* barre latérale */
+.sb{background:#fff;border-right:1px solid var(--line)}
+.brand img{height:22px}
+.ni{border-radius:10px}
+.ni svg.i{color:var(--mut2)}
+.ni.on{background:var(--accb);color:var(--acct)}
+.ni.on svg.i{color:var(--acc)}
+.ni .k{font:600 11.5px/1 var(--sans);background:var(--hov);letter-spacing:0}
+.pill-demo{color:var(--ink2);background:var(--hov);border:1px solid var(--line)}
+.pill-demo svg.i{color:var(--acc)}
+
+/* en-tête */
+.bar{background:rgba(255,255,255,.86);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+.online{border-radius:999px}
+
+/* cartes */
+.card,.kc,.kpi,.tabs a,.flow li,.cpt,.ty button,.rt,.garde,.impf,.cn{border-color:var(--line)}
+.card,.kc,.kpi,.cpt{border-radius:var(--r);box-shadow:var(--sh)}
+.tabs a{border-radius:14px}
+.tabs a.on{border-color:var(--acc);box-shadow:0 0 0 3px rgba(233,91,15,.12)}
+.btn{border-radius:10px;font-weight:600;box-shadow:0 1px 2px rgba(233,91,15,.25)}
+.btn:hover{filter:brightness(.96)}
+.cnt,.sc,.nv,.fx{border-radius:999px}
+.valide{border-color:#A7F3D0}
+
+/* téléphone */
+.phone,.ph{box-shadow:0 24px 60px rgba(15,23,42,.18),0 2px 8px rgba(15,23,42,.06)}
+
+/* barre d'onglets mobile */
+@media (max-width:900px){
+  .tabbar{background:rgba(255,255,255,.96);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-top:1px solid var(--line)}
+  .tabbar a.on{color:var(--acc)}
+  h1{font-size:23px}
+}
